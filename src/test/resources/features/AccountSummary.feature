@@ -4,16 +4,19 @@ Feature: Account summary page layout check
     Given the user is logged in
     When the user is on the "Account Summary" page
 
-  @wip
-  Scenario: Check account types
+  Scenario: Verify title
+    Then page should have the title "Zero – Account summary"
+
+
+  Scenario: Verify account types
     Then page should have to following account types
       | Cash Accounts       |
       | Investment Accounts |
       | Credit Accounts     |
       | Loan Accounts       |
 
-  @wip
-  Scenario: Check Credit Accounts table
+
+  Scenario: Verify Credit Accounts table headers
     Then Credit Accounts table must have these columns
       | Account     |
       | Credit Card |

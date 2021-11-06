@@ -2,6 +2,7 @@ package com.zerobank.stepdefinitions;
 
 import com.zerobank.pages.AccountSummaryPage;
 import com.zerobank.pages.LoginPage;
+import com.zerobank.pages.MasterPage;
 import com.zerobank.utilities.BrowserUtils;
 import com.zerobank.utilities.ConfigurationReader;
 import com.zerobank.utilities.Driver;
@@ -26,7 +27,7 @@ public class AccountSummaryStepDefinitions {
 
     @When("the user is on the {string} page")
     public void the_user_is_on_the_page(String pageName) {
-        Driver.get().get(ConfigurationReader.get("url_" + pageName.toLowerCase().replace(" ", "_")));
+        new MasterPage().navigateToTabAndModule(pageName);
     }
 
     @Then("page should have to following account types")
@@ -40,4 +41,11 @@ public class AccountSummaryStepDefinitions {
     public void creditAccountsTableMustHaveTheseColumns(List<String> creditAccountHeaders) {
         Assert.assertEquals(BrowserUtils.getElementsText(new AccountSummaryPage().creditAccountsTableHeaders), creditAccountHeaders);
     }
+
+    @Then("page should have the title {string}")
+    public void pageShouldHaveTheTitle(String title) {
+        Assert.assertEquals(title, Driver.get().getTitle());
+    }
+
+
 }
