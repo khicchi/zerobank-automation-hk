@@ -17,4 +17,14 @@ public class AccountSummaryPage {
 
     @FindBy(xpath = "//h2[.='Credit Accounts']/following-sibling::div[1]//table//th")
     public List<WebElement> creditAccountsTableHeaders;
+
+    @FindBy(linkText = "Savings")
+    public WebElement linkSavings;
+
+    @FindBy(css = "a[style='text-decoration: underline']")
+    public List<WebElement> links;
+
+    public WebElement getLinkByText(String linkText){
+        return links.stream().filter(e -> e.getText().equals(linkText)).findFirst().get();
+    }
 }

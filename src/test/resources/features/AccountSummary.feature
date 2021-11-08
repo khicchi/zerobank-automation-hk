@@ -2,10 +2,10 @@ Feature: Account summary page layout check
 
   Background:
     Given the user is logged in
-    When the user is on the "Account Summary" page
+    When user navigates to the "Account Summary" page
 
   Scenario: Verify title
-    Then page should have the title "Zero – Account summary"
+    Then page should have the title "Zero - Account summary"
 
 
   Scenario: Verify account types

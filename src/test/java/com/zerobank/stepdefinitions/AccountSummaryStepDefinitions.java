@@ -25,8 +25,8 @@ public class AccountSummaryStepDefinitions {
         Driver.get().findElement(By.id("proceed-link")).click();
     }
 
-    @When("the user is on the {string} page")
-    public void the_user_is_on_the_page(String pageName) {
+    @When("user navigates to the {string} page")
+    public void user_navigates_to_the_page(String pageName) {
         new MasterPage().navigateToTabAndModule(pageName);
     }
 

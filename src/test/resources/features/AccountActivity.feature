@@ -2,10 +2,10 @@ Feature: Account activity page layout check
 
   Background:
     Given the user is logged in
-    When the user is on the "Account Activity" page
+    When user navigates to the "Account Activity" page
 
   Scenario: Verify title
-    Then page should have the title "Zero – Account activity"
+    Then page should have the title "Zero - Account activity"
 
   Scenario: Verify account dropdown control default option
     Then Account dropdown's default option should be "Savings"
@@ -18,7 +18,6 @@ Feature: Account activity page layout check
       | Credit Card |
       | Brokerage   |
 
-  @wip
   Scenario: Verify Transaction table column names
     Then Transactions table should have column names
       | Date        |
