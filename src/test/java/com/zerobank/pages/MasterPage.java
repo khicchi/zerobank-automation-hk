@@ -30,7 +30,7 @@ public class MasterPage {
     @FindBy(id = "online_statements_tab")
     private WebElement tab_onlineStatements;
 
-    public void navigateToTabAndModule(String pageName){
+    public void navigateToTab(String pageName){
         if (pageName.equals(ETab.tab_accountSummary.getName()))
             tab_accountSummary.click();
         else if (pageName.equals(ETab.tab_accountActivity.getName()))

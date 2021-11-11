@@ -3,11 +3,16 @@ package com.zerobank.stepdefinitions;
 import com.zerobank.pages.PayBillsPage;
 import com.zerobank.utilities.Driver;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+
+import java.util.List;
+import java.util.Map;
 
 public class PayBillsStepDefinitions {
 
@@ -40,8 +45,8 @@ public class PayBillsStepDefinitions {
 
     @Then("{string} message should be displayed.")
     public void message_should_be_displayed(String message) {
-        Assert.assertTrue(payBillsPage.messageSpan.isDisplayed());
-        Assert.assertEquals(message, payBillsPage.messageSpan.getText());
+        Assert.assertTrue(payBillsPage.getModulePaySavedPayee().messageSpan.isDisplayed());
+        Assert.assertEquals(message, payBillsPage.getModulePaySavedPayee().messageSpan.getText());
     }
 
     @Then("{string} warning message should be displayed for {string}.")
@@ -65,8 +70,8 @@ public class PayBillsStepDefinitions {
 
     @Then("Amount field should not accept non-numeric characters")
     public void amount_field_should_not_accept_non_numeric_characters() {
-        Assert.assertFalse(payBillsPage.messageSpan.isDisplayed());
-        Assert.assertNotEquals("The payment was successfully submitted.", payBillsPage.messageSpan.getText());
+        Assert.assertFalse(payBillsPage.getModulePaySavedPayee().messageSpan.isDisplayed());
+        Assert.assertNotEquals("The payment was successfully submitted.", payBillsPage.getModulePaySavedPayee().messageSpan.getText());
     }
 
 
@@ -85,5 +90,49 @@ public class PayBillsStepDefinitions {
     public void dateFieldShouldNotAcceptAlphabeticalCharacters() {
         Assert.assertTrue(payBillsPage.getModulePaySavedPayee().txtDate.getText().isEmpty());
         Assert.assertTrue(payBillsPage.getModulePaySavedPayee().txtDate.getText().isBlank());
+    }
+
+    @Given("User navigates to {string} tab")
+    public void userNavigatesToTab(String tabName) {
+        payBillsPage.openTab(tabName);
+    }
+
+    @And("creates new payee using following information")
+    public void createsNewPayeeUsingFollowingInformation(Map<String, String> payeeInfo) {
+        payBillsPage.getModuleAddNewPayee().txtPayeeName.sendKeys(payeeInfo.get("Payee Name"));
+        payBillsPage.getModuleAddNewPayee().txtPayeeAddress.sendKeys(payeeInfo.get("Payee Address"));
+        payBillsPage.getModuleAddNewPayee().txtAccount.sendKeys(payeeInfo.get("Account"));
+        payBillsPage.getModuleAddNewPayee().txtPayeeDetails.sendKeys(payeeInfo.get("Payee Details"));
+        payBillsPage.getModuleAddNewPayee().btnAdd.click();
+    }
+
+    @Then("{string} message should be displayed")
+    public void messageShouldBeDisplayed(String message) {
+        Assert.assertTrue(payBillsPage.getModuleAddNewPayee().lblMessage.isDisplayed());
+        Assert.assertTrue(payBillsPage.getModuleAddNewPayee().lblMessage.getText().equals(message));
+    }
+
+    @Then("following currencies should be available")
+    public void followingCurrenciesShouldBeAvailable(List<String> currencyList) {
+        Assert.assertEquals(currencyList, payBillsPage.getForeignCurrency().getCurrencySelectValues().subList(1, payBillsPage.getForeignCurrency().getCurrencySelectValues().size() - 1));
+    }
+
+    @Then("error message should be displayed")
+    public void errorMessageShouldBeDisplayed() {
+        Assert.assertTrue(Driver.get().switchTo().alert() != null);
+    }
+
+    @When("user tries to calculate cost without selecting a currency")
+    public void userTriesToCalculateCostWithoutSelectingACurrency() {
+        payBillsPage.getForeignCurrency().txtAmount.clear();
+        payBillsPage.getForeignCurrency().txtAmount.sendKeys("20");
+        payBillsPage.getForeignCurrency().btnCalculateCosts.click();
+    }
+
+    @When("user tries to calculate cost without entering a value")
+    public void userTriesToCalculateCostWithoutEnteringAValue() {
+        payBillsPage.getForeignCurrency().txtAmount.clear();
+        payBillsPage.getForeignCurrency().getDDLCurrencySelect().selectByIndex(3);
+        payBillsPage.getForeignCurrency().btnCalculateCosts.click();
     }
 }

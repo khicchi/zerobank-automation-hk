@@ -12,7 +12,6 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AccountSummaryStepDefinitions {
@@ -27,7 +26,7 @@ public class AccountSummaryStepDefinitions {
 
     @When("user navigates to the {string} page")
     public void user_navigates_to_the_page(String pageName) {
-        new MasterPage().navigateToTabAndModule(pageName);
+        new MasterPage().navigateToTab(pageName);
     }
 
     @Then("page should have to following account types")

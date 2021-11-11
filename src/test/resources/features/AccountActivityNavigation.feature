@@ -28,3 +28,4 @@ Feature: Navigating to specific accounts in Accounts Activity
     When the user clicks on "Loan" link on the Account Summary page
     Then "Account Activity" page should be displayed
     And Account dropdown's default option should be "Loan"
+
